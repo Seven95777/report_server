@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.iron.ncp.dao.CompanyDailyMapper" >
+  <select id="selectByTable" resultType="com.iron.ncp.entity.CompanyDaily" parameterType="com.iron.ncp.entity.CompanyDaily">
+    select * FROM ${srcTable}
+    <where>
+      <if test="companyNum!=null and subFlag==0">AND company_num =#{companyNum}</if>
+      <if test="companyNum!=null and subFlag==1">AND company_num LIKE CONCAT(#{companyNum},'%')</if>
+      <if test="company!=null">AND company = #{company}</if>
+      <if test="entryTime!=null">AND entry_time = #{entryTime}</if>
+    </where>
+  </select>
+
+  <insert id="insertByTable" parameterType="com.iron.ncp.entity.CompanyDaily" >
+    insert into ${srcTable} (id, company, created,
+      entry_time, company_num, rework_flag, 
+      staff_count, company_status, rework_count, duty_count,operate_count, rework_sum)
+    values (#{id,jdbcType=BIGINT}, #{company,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, 
+      #{entryTime,jdbcType=DATE}, #{companyNum,jdbcType=BIGINT}, #{reworkFlag,jdbcType=INTEGER}, 
+      #{staffCount,jdbcType=INTEGER}, #{companyStatus,jdbcType=INTEGER}, #{reworkCount,jdbcType=INTEGER},
+       #{dutyCount,jdbcType=INTEGER}, #{operateCount,jdbcType=INTEGER}, #{reworkSum,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByTable" parameterType="com.iron.ncp.entity.CompanyDaily" >
+    update ${srcTable}
+    set company = #{company,jdbcType=VARCHAR},
+      created = #{created,jdbcType=TIMESTAMP},
+      entry_time = #{entryTime,jdbcType=DATE},
+      company_num = #{companyNum,jdbcType=BIGINT},
+      rework_flag = #{reworkFlag,jdbcType=INTEGER},
+      staff_count = #{staffCount,jdbcType=INTEGER},
+      company_status = #{companyStatus,jdbcType=INTEGER},
+      rework_count = #{reworkCount,jdbcType=INTEGER},
+      duty_count = #{dutyCount,jdbcType=INTEGER},
+      operate_count = #{operateCount,jdbcType=INTEGER},
+      rework_sum = #{reworkSum,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <delete id="deleteByTable" parameterType="com.iron.ncp.entity.CompanyDaily">
+    delete from ${srcTable} where company_num = #{companyNum}
+  </delete>
+
+  <delete id="myDeleteById" parameterType="com.iron.ncp.entity.CompanyDaily">
+    delete from ${srcTable} where id = #{id}
+  </delete>
+</mapper>

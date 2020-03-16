@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.iron.ncp.dao.ProjectDailyMapper" >
+
+  <select id="selectByTable" resultType="com.iron.ncp.entity.ProjectDaily" parameterType="com.iron.ncp.entity.ProjectDaily">
+    select * FROM ${srcTable}
+    <where>
+      <if test="companyNum!=null and subFlag==0">AND company_num =#{companyNum}</if>
+      <if test="companyNum!=null and subFlag==1">AND company_num LIKE CONCAT(#{companyNum},'%')</if>
+      <if test="projectName!=null">AND project_name = #{projectName}</if>
+      <if test="projectNum!=null">AND project_num = #{projectNum}</if>
+      <if test="company!=null">AND company = #{company}</if>
+      <if test="entryTime!=null">AND entry_time = #{entryTime}</if>
+    </where>
+  </select>
+
+  <insert id="insertByTable" parameterType="com.iron.ncp.entity.ProjectDaily" >
+    insert into ${srcTable} (id, created, project_num,
+      entry_time, impt_flag, rework_flag, 
+      project_name, people_count, rework_count, 
+      abnormal_count, outside_flag, company_num, company, worker_count)
+    values (#{id,jdbcType=BIGINT}, #{created,jdbcType=TIMESTAMP}, #{projectNum,jdbcType=BIGINT}, 
+      #{entryTime,jdbcType=DATE}, #{imptFlag,jdbcType=INTEGER}, #{reworkFlag,jdbcType=INTEGER}, 
+      #{projectName,jdbcType=VARCHAR}, #{peopleCount,jdbcType=INTEGER}, #{reworkCount,jdbcType=INTEGER}, 
+      #{abnormalCount,jdbcType=VARCHAR}, #{outsideFlag,jdbcType=INTEGER}, #{companyNum,jdbcType=BIGINT},
+      #{company,jdbcType=VARCHAR},#{workerCount,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByTable" parameterType="com.iron.ncp.entity.ProjectDaily" >
+    update ${srcTable}
+    set created = #{created,jdbcType=TIMESTAMP},
+      project_num = #{projectNum,jdbcType=BIGINT},
+      entry_time = #{entryTime,jdbcType=DATE},
+      impt_flag = #{imptFlag,jdbcType=INTEGER},
+      rework_flag = #{reworkFlag,jdbcType=INTEGER},
+      project_name = #{projectName,jdbcType=VARCHAR},
+      people_count = #{peopleCount,jdbcType=INTEGER},
+      rework_count = #{reworkCount,jdbcType=INTEGER},
+      abnormal_count = #{abnormalCount,jdbcType=VARCHAR},
+      outside_flag = #{outsideFlag,jdbcType=INTEGER},
+      company_num = #{companyNum,jdbcType=BIGINT},
+      company = #{company,jdbcType=VARCHAR},
+      worker_count = #{workerCount,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <delete id="deleteByTable" parameterType="com.iron.ncp.entity.ProjectDaily">
+    delete from ${srcTable} where project_num = #{projectNum}
+  </delete>
+
+  <delete id="myDeleteById" parameterType="com.iron.ncp.entity.ProjectDaily">
+    delete from ${srcTable} where id = #{id}
+  </delete>
+</mapper>

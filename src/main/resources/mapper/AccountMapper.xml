@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.iron.ncp.dao.AccountMapper" >
+  <resultMap id="BaseResultMap" type="com.iron.ncp.entity.Account" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="company" property="company" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="account_type" property="accountType" jdbcType="VARCHAR" />
+    <result column="edit_name" property="editName" jdbcType="VARCHAR" />
+    <result column="edit_tel" property="editTel" jdbcType="BIGINT" />
+    <result column="company_num" property="companyNum" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    id, username, password, company, created, account_type, edit_name, edit_tel, company_num
+  </sql>
+  <select id="selectMaxId" resultType="int">
+    select ifnull(MAX(id),0) from account;
+  </select>
+</mapper>

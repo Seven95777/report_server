@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.iron.ncp.dao.ProjectMapper" >
+
+  <select id="selectByTable" resultType="com.iron.ncp.entity.Project" parameterType="com.iron.ncp.entity.Project">
+    select * FROM ${srcTable}
+    <where>
+      <if test="companyNum!=null and subFlag==0">AND company_num =#{companyNum}</if>
+      <if test="companyNum!=null and subFlag==1">AND company_num LIKE CONCAT(#{companyNum},'%')</if>
+      <if test="projectName!=null">AND project_name = #{projectName}</if>
+      <if test="name!=null">AND name = #{name}</if>
+      <if test="entryTime!=null">AND entry_time = #{entryTime}</if>
+      <if test="tel!=null">AND tel = #{tel}</if>
+      <if test="idCard!=null">AND id_card = #{idCard}</if>
+    </where>
+  </select>
+
+  <insert id="insertByTable" parameterType="com.iron.ncp.entity.Project" >
+    insert into ${srcTable} (entry_time, company,
+      project_name, name, id_card,
+      address, contact, contact_hb,
+      temp, created, from_addr,
+      company_num, impt_flag, tel)
+    values (#{entryTime,jdbcType=DATE}, #{company,jdbcType=VARCHAR},
+      #{projectName,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR},
+      #{address,jdbcType=VARCHAR}, #{contact,jdbcType=INTEGER}, #{contactHb,jdbcType=INTEGER},
+      #{temp,jdbcType=INTEGER}, #{created,jdbcType=TIMESTAMP}, #{fromAddr,jdbcType=VARCHAR},
+      #{companyNum,jdbcType=BIGINT}, #{imptFlag,jdbcType=INTEGER}, #{tel,jdbcType=BIGINT})
+  </insert>
+
+  <update id="updateByTable" parameterType="com.iron.ncp.entity.Project" >
+    update ${srcTable}
+    set entry_time = #{entryTime,jdbcType=DATE},
+      company = #{company,jdbcType=VARCHAR},
+      project_name = #{projectName,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      id_card = #{idCard,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      contact = #{contact,jdbcType=INTEGER},
+      contact_hb = #{contactHb,jdbcType=INTEGER},
+      temp = #{temp,jdbcType=INTEGER},
+      created = #{created,jdbcType=TIMESTAMP},
+      from_addr = #{fromAddr,jdbcType=VARCHAR},
+      company_num = #{companyNum,jdbcType=BIGINT},
+      impt_flag = #{imptFlag,jdbcType=INTEGER},
+      tel = #{tel,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <delete id="deleteByTable" parameterType="com.iron.ncp.entity.Project">
+    delete from ${srcTable} where company_num = #{companyNum}
+  </delete>
+</mapper>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.iron.ncp.dao.GuestProjectMapper" >
+  <select id="selectByTable" resultType="com.iron.ncp.entity.GuestProject" parameterType="com.iron.ncp.entity.GuestProject">
+    select * FROM ${srcTable}
+    <where>
+      <if test="companyNum!=null and subFlag==0">AND company_num =#{companyNum}</if>
+      <if test="companyNum!=null and subFlag==1">AND company_num LIKE CONCAT(#{companyNum},'%')</if>
+--       <if test="projectName!=null">AND project_name = #{projectName}</if>
+      <if test="projectNum!=null">AND project_num = #{projectNum}</if>
+      <if test="name!=null">AND name = #{name}</if>
+      <if test="entryTime!=null">AND entry_time = #{entryTime}</if>
+    </where>
+  </select>
+  <insert id="insertByTable" parameterType="com.iron.ncp.entity.GuestProject" >
+    insert into ${srcTable} (id, name, company,
+      id_card, address, tel, 
+      created, contact, contact_hb, 
+      family_health, visit_time, temp, 
+      project_num)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{company,jdbcType=VARCHAR}, 
+      #{idCard,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{tel,jdbcType=BIGINT}, 
+      #{created,jdbcType=TIMESTAMP}, #{contact,jdbcType=INTEGER}, #{contactHb,jdbcType=INTEGER}, 
+      #{familyHealth,jdbcType=INTEGER}, #{visitTime,jdbcType=TIMESTAMP}, #{temp,jdbcType=INTEGER}, 
+      #{projectNum,jdbcType=BIGINT}, #{companyNum,jdbcType=BIGINT})
+  </insert>
+
+  <update id="updateByTable" parameterType="com.iron.ncp.entity.GuestProject" >
+    update ${srcTable}
+    set name = #{name,jdbcType=VARCHAR},
+      company = #{company,jdbcType=VARCHAR},
+      id_card = #{idCard,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=BIGINT},
+      created = #{created,jdbcType=TIMESTAMP},
+      contact = #{contact,jdbcType=INTEGER},
+      contact_hb = #{contactHb,jdbcType=INTEGER},
+      family_health = #{familyHealth,jdbcType=INTEGER},
+      visit_time = #{visitTime,jdbcType=TIMESTAMP},
+      temp = #{temp,jdbcType=INTEGER},
+      project_num = #{projectNum,jdbcType=BIGINT},
+      company_num = #{companyNum,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <delete id="deleteByTable" parameterType="com.iron.ncp.entity.GuestProject">
+    delete from ${srcTable} where project_num = #{projectNum}
+  </delete>
+</mapper>

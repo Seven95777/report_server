@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.iron.ncp.dao.NotReworkImptMapper" >
+
+  <select id="selectByTable" resultType="com.iron.ncp.entity.NotReworkImpt" parameterType="com.iron.ncp.entity.NotReworkImpt">
+    select * FROM ${srcTable}
+    <where>
+      <if test="companyNum!=null and subFlag==0">AND company_num =#{companyNum}</if>
+      <if test="companyNum!=null and subFlag==1">AND company_num LIKE CONCAT(#{companyNum},'%')</if>
+      <if test="name!=null">AND name = #{name}</if>
+      <if test="entryTime!=null">AND entry_time = #{entryTime}</if>
+      <if test="idCard!=null">AND id_card = #{idCard}</if>
+    </where>
+  </select>
+  <insert id="insertByTable" parameterType="com.iron.ncp.entity.NotReworkImpt" >
+    insert into ${srcTable} (id, entry_time, name,
+      id_card, address, sex,
+      age, tel, direction,
+      direction_way, leave_back_time, health,
+      contact_hb, contact_ncp, pass_hb,
+      isolation, ob_result, company,
+      edit_name, edit_time, edit_tel,
+      created, company_num, back_cd
+      )
+    values (#{id,jdbcType=BIGINT}, #{entryTime,jdbcType=DATE}, #{name,jdbcType=VARCHAR},
+      #{idCard,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER},
+      #{age,jdbcType=INTEGER}, #{tel,jdbcType=BIGINT}, #{direction,jdbcType=VARCHAR},
+      #{directionWay,jdbcType=INTEGER}, #{leaveBackTime,jdbcType=VARCHAR}, #{health,jdbcType=INTEGER},
+      #{contactHb,jdbcType=INTEGER}, #{contactNcp,jdbcType=INTEGER}, #{passHb,jdbcType=INTEGER},
+      #{isolation,jdbcType=INTEGER}, #{obResult,jdbcType=INTEGER}, #{company,jdbcType=VARCHAR},
+      #{editName,jdbcType=VARCHAR}, #{editTime,jdbcType=DATE}, #{editTel,jdbcType=BIGINT},
+      #{created,jdbcType=TIMESTAMP}, #{companyNum,jdbcType=BIGINT}, #{backCd,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByTable" parameterType="com.iron.ncp.entity.NotReworkImpt" >
+    update ${srcTable}
+    set entry_time = #{entryTime,jdbcType=DATE},
+      name = #{name,jdbcType=VARCHAR},
+      id_card = #{idCard,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=INTEGER},
+      age = #{age,jdbcType=INTEGER},
+      tel = #{tel,jdbcType=BIGINT},
+      direction = #{direction,jdbcType=VARCHAR},
+      direction_way = #{directionWay,jdbcType=INTEGER},
+      leave_back_time = #{leaveBackTime,jdbcType=VARCHAR},
+      health = #{health,jdbcType=INTEGER},
+      contact_hb = #{contactHb,jdbcType=INTEGER},
+      contact_ncp = #{contactNcp,jdbcType=INTEGER},
+      pass_hb = #{passHb,jdbcType=INTEGER},
+      isolation = #{isolation,jdbcType=INTEGER},
+      ob_result = #{obResult,jdbcType=INTEGER},
+      company = #{company,jdbcType=VARCHAR},
+      edit_name = #{editName,jdbcType=VARCHAR},
+      edit_time = #{editTime,jdbcType=DATE},
+      edit_tel = #{editTel,jdbcType=BIGINT},
+      created = #{created,jdbcType=TIMESTAMP},
+      company_num = #{companyNum,jdbcType=BIGINT},
+      back_cd = #{backCd,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <delete id="deleteByTable" parameterType="com.iron.ncp.entity.NotReworkImpt">
+    delete from ${srcTable} where company_num = #{companyNum}
+  </delete>
+</mapper>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.iron.ncp.dao.WeatherMapper" >
+  <resultMap id="BaseResultMap" type="com.iron.ncp.entity.Weather" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="area" property="area" jdbcType="VARCHAR" />
+    <result column="temp" property="temp" jdbcType="VARCHAR" />
+    <result column="humidity" property="humidity" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="pm25" property="pm25" jdbcType="VARCHAR" />
+    <result column="fl" property="fl" jdbcType="VARCHAR" />
+    <result column="low_tp" property="lowTp" jdbcType="BIGINT" />
+    <result column="high_tp" property="highTp" jdbcType="BIGINT" />
+    <result column="weather_type" property="weatherType" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+      `id`, `area`, `temp`, `humidity`, `pm25`, `created`, `fl`, `low_tp`, `high_tp`, `weather_type`
+  </sql>
+    <insert id="insertAll">
+
+
+    </insert>
+    <select id="selectMaxId" resultType="int">
+    select <include refid="Base_Column_List"/>
+    FROM weather
+  </select>
+</mapper>

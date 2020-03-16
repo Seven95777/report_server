@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.iron.ncp.dao.NcpCtrlInfoMapper" >
+
+  <select id="selectByCompany" resultType="com.iron.ncp.entity.NotReworkImpt" parameterType="com.iron.ncp.entity.NotReworkImpt">
+    select * FROM ncp_ctrl_info
+    <where>
+      <if test="companyNum!=null and subFlag==0">AND company_num =#{companyNum}</if>
+      <if test="companyNum!=null and subFlag==1">AND company_num LIKE CONCAT(#{companyNum},'%')</if>
+      <if test="name!=null">AND name = #{name}</if>
+      <if test="entryTime!=null">AND entry_time = #{entryTime}</if>
+      <if test="idCard!=null">AND id_card = #{idCard}</if>
+    </where>
+  </select>
+</mapper>
