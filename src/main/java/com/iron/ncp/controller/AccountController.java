@@ -3,6 +3,7 @@ package com.iron.ncp.controller;
 import com.iron.ncp.entity.Account;
 import com.iron.ncp.service.AccountService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,12 +27,15 @@ public class AccountController {
 
     @Resource
     private AccountService accountService;
+
     @PostMapping("login")
+    @ApiOperation("用户登陆系统")
     public Object list(@Validated @RequestBody Account account) {
         return accountService.login(account);
     }
 
     @PostMapping("add")
+    @ApiOperation("创建系统用户信息")
     public Object add(@Validated @RequestBody List<Account> accounts) {
         return accountService.add(accounts);
     }

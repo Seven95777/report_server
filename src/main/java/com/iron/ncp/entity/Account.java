@@ -1,5 +1,6 @@
 package com.iron.ncp.entity;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -15,16 +16,19 @@ public class Account {
     /**
      * 用户名
      */
+    @ApiModelProperty("用户名")
     private String username;
 
     /**
      * 密码
      */
+    @ApiModelProperty("用户名密码")
     private String password;
 
     /**
      * 公司名称
      */
+    @ApiModelProperty("公司名称")
     private String company;
 
     /**
